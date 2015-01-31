@@ -1,0 +1,31 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:2.5.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
+
+retrolambda {
+    jdk System.getenv("JAVA8_HOME")
+    oldJdk System.getenv("JAVA7_HOME")
+    javaVersion JavaVersion.VERSION_1_7
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'io.reactivex:rxjava:1.+'
+}
+
+task execute(type:JavaExec) {
+   main = 'com.github.yongjhih.Main'
+   classpath = sourceSets.main.runtimeClasspath
+}
