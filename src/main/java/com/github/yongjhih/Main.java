@@ -4,6 +4,7 @@ import rx.schedulers.*;
 import rx.Observable;
 import rx.functions.*;
 import rx.observables.*;
+import rx.util.*;
 import rx.internal.operators.*;
 import java.util.concurrent.*;
 
@@ -21,9 +22,6 @@ public class Main {
         Observable.range(1, 10)
             .lift(new OperatorTick<Integer>(1, TimeUnit.SECONDS))
             .subscribe(System.out::println, e -> {}, () -> System.out.println("onCompleted"));
-        try {
-        Thread.sleep(3000);
-        } catch (Exception e) {}
         while (true);
     }
 }

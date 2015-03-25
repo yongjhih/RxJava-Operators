@@ -46,7 +46,6 @@ public class OperatorTick<T> implements Operator<T, T> {
         private final Observable<Long> tick;
         private PublishSubject stop = PublishSubject.create();
         private Subject<T, T> subject;
-        BehaviorSubject<Boolean> tickSwitch = BehaviorSubject.create(false);
 
         public TickSubscriber(long interval, TimeUnit unit, final Subscriber<? super T> child) {
             super();
@@ -83,9 +82,7 @@ public class OperatorTick<T> implements Operator<T, T> {
 
         @Override
         public void onNext(T t) {
-            tickSwitch.onNext(true);
             subject.onNext(t);
-            tickSwitch.onNext(false);
         }
     }
 }
