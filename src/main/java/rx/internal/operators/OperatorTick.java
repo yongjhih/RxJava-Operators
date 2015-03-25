@@ -46,6 +46,7 @@ public class OperatorTick<T> implements Operator<T, T> {
         private final Observable<Long> tick;
         private PublishSubject stop = PublishSubject.create();
         private Subject<T, T> subject;
+        private long zipCount = 0;
 
         public TickSubscriber(long interval, TimeUnit unit, final Subscriber<? super T> child) {
             super();
@@ -54,14 +55,16 @@ public class OperatorTick<T> implements Operator<T, T> {
             this.unit = unit;
             this.child = child;
 
-            tick = Observable.interval(interval, unit);
+            tick = Observable.interval(interval, unit).map(l -> zipCount).distinct();
         }
 
         @Override
         public void onStart() {
             subject = PublishSubject.create();
-            Observable.zip(subject.asObservable(), tick, (emit, t) -> emit)
-                // TODO .timeout tick if needed
+            Observable.zip(subject.asObservable(), tick, (emit, t) -> {
+                    zipCount++;
+                    return emit;
+                })
                 .subscribe(emit -> child.onNext(emit), e -> child.onError(e), () -> child.onCompleted());
         }
 
