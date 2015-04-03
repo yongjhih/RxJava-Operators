@@ -29,28 +29,6 @@ import rx.Subscriber;
 public final class OperatorReverse<T> implements Operator<T, T> {
     @Override
     public Subscriber<? super T> call(final Subscriber<? super T> o) {
-        return new OperatorToReversedList().call(
-            new Subscriber<List<T>>(o) {
-                @Override
-                public void onStart() {
-                    request(Long.MAX_VALUE);
-                }
-
-                @Override
-                public void onCompleted() {
-                    o.onCompleted();
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    o.onError(e);
-                }
-
-                @Override
-                public void onNext(List<T> value) {
-                    for (T v : value) o.onNext(v);
-                }
-            }
-        );
+        return new OperatorToReversedList().call(new OperatorFlatList().call(o));
     }
 }
