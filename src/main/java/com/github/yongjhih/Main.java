@@ -7,18 +7,32 @@ import rx.observables.*;
 import rx.internal.operators.*;
 import rx.subjects.*;
 import java.util.concurrent.*;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
+        Observable<Integer> ranger = Observable.range(1, 10);
+        Observable<Long> timer = Observable.interval(1, TimeUnit.SECONDS);
         /*
-        Observable<Integer> ranger = Observable.range(1, 100);
-        Observable<Long> timer = Observable.interval(100, TimeUnit.MILLISECONDS);
         Observable.zip(ranger, timer, (i, t) -> {
-                sub.onNext(i);
                 return i;
             }).subscribe(System.out::println);
         */
 
+        Observable.range(1, 10).toList().doOnNext(list -> Collections.reverse(list))
+            .subscribe(System.out::println);
+        Observable.range(1, 10).lift(new OperatorReverse())
+            .subscribe(System.out::println);
+        Observable.range(1, 10).lift(new OperatorShuffle())
+            .subscribe(System.out::println);
+        Observable.range(1, 10).lift(new OperatorToReversedList())
+            .subscribe(System.out::println);
+        Observable.range(1, 10).lift(new OperatorToShuffledList())
+            .subscribe(System.out::println);
+        Observable.range(1, 10).lift(new OperatorTick(1, TimeUnit.SECONDS))
+            .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
+
+        /*
         Subject<Integer, Integer> mBus = PublishSubject.create();
         mBus.onNext(1);
         mBus.asObservable()
@@ -38,6 +52,7 @@ public class Main {
         mBus.onNext(1);
         mBus.onNext(3);
         mBus.onNext(5);
+        */
         while (true);
     }
 }
