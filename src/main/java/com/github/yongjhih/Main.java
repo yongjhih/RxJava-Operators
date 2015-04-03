@@ -29,7 +29,7 @@ public class Main {
             .subscribe(System.out::println);
         Observable.range(1, 10).lift(new OperatorToShuffledList())
             .subscribe(System.out::println);
-        Observable.range(1, 10).lift(new OperatorTick(1, TimeUnit.SECONDS))
+        Observable.range(1, 10).lift(new OperatorFrequency(1, TimeUnit.SECONDS))
             .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
 
         /*
