@@ -1,3 +1,3 @@
 ```
-./gradlew execute
+./gradlew test
 ```

@@ -21,11 +21,16 @@ repositories {
     jcenter()
 }
 
+javadoc {
+    exclude "**/rx/internal/**"
+}
+
 dependencies {
+    testCompile 'junit:junit-dep:4.10'
+    testCompile 'org.mockito:mockito-core:1.8.5'
     compile 'io.reactivex:rxjava:1.+'
 }
 
-task execute(type:JavaExec) {
-   main = 'com.github.yongjhih.Main'
-   classpath = sourceSets.main.runtimeClasspath
+test {
+    testLogging.showStandardStreams = true
 }

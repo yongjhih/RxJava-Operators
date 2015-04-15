@@ -1,4 +1,4 @@
-package com.github.yongjhih;
+package rx;
 
 import rx.schedulers.*;
 import rx.Observable;
@@ -10,8 +10,14 @@ import java.util.concurrent.*;
 import java.util.Collections;
 import java.util.Arrays;
 
-public class Main {
-    public static void main(String[] args) {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class MainTest {
+    @Test
+    public void testMain() {
         Observable<Integer> ranger = Observable.range(1, 10);
         Observable<Long> timer = Observable.interval(1, TimeUnit.SECONDS);
         /*
@@ -35,6 +41,7 @@ public class Main {
         Observable.range(1, 10).lift(new OperatorFrequency(1, TimeUnit.SECONDS))
             .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
 
+        assertTrue(true);
         //Observable.from(Arrays.asList("1", "2")).single().subscribe(System.out::println);
 
         /*
@@ -58,6 +65,5 @@ public class Main {
         mBus.onNext(3);
         mBus.onNext(5);
         */
-        while (true);
     }
 }
