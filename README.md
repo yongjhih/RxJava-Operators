@@ -108,4 +108,4 @@ dependencies {
 
 ## License
 
-Apache 2.0 8tory, Inc.
+Apache 2.0 2014 8tory, Inc.
