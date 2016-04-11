@@ -50,6 +50,15 @@ Observable.range(1, 10).lift(new OperatorToReverse())
 
 ## OperatorFrequency
 
+Before:
+
+```java
+Observable.range(1, 10).zipWith(Observable.interval(1, TimeUnit.SECONDS), (i, t) -> i)
+    .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis());
+```
+
+After:
+
 ```java
 Observable.range(1, 10).lift(new OperatorFrequency(1, TimeUnit.SECONDS))
     .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis());
