@@ -39,6 +39,11 @@ public class OperatorFrequency<T> implements Operator<T, T> {
         return new FrequencySubscriber<>(interval, unit, child);
     }
 
+    // lazy new OperatorFrequency<>();
+    public static <R> OperatorFrequency<R> create(long interval, TimeUnit unit) {
+        return new OperatorFrequency<R>(interval, unit);
+    }
+
     static class FrequencySubscriber<T> extends Subscriber<T> {
         private long interval;
         private TimeUnit unit;

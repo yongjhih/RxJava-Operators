@@ -9,6 +9,7 @@ import rx.subjects.*;
 import java.util.concurrent.*;
 import java.util.Collections;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -39,7 +40,7 @@ public class MainTest {
             .subscribe(System.out::println);
         Observable.range(1, 10).lift(new OperatorToShuffledList())
             .subscribe(System.out::println);
-        Observable.range(1, 10).lift(new OperatorFrequency(1, TimeUnit.SECONDS))
+        Observable.range(1, 10).lift(OperatorFrequency.create(1, TimeUnit.SECONDS))
             .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
 
         assertTrue(true);
@@ -66,5 +67,31 @@ public class MainTest {
         mBus.onNext(3);
         mBus.onNext(5);
         */
+    }
+
+    @Test
+    public void testFreq() {
+        // TODO
+        /*
+        Observable.range(1, 10).zipWith(Observable.interval(1, TimeUnit.SECONDS), (i, t) -> i)
+            .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
+        Observable.range(1, 10).lift(new OperatorFrequency(1, TimeUnit.SECONDS))
+            .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        */
+        List<Long> list1 = Observable.range(1, 10).zipWith(Observable.interval(10, TimeUnit.MILLISECONDS), (i, t) -> i)
+            .map(i -> System.currentTimeMillis())
+            .toList().toBlocking().single();
+        System.out.println(list1);
+        List<Long> list2 = Observable.range(1, 10).lift(OperatorFrequency.create(10, TimeUnit.MILLISECONDS))
+            .map(i -> System.currentTimeMillis())
+            .toList().toBlocking().single();
+        System.out.println(list2);
+        assertTrue(true);
+
     }
 }
