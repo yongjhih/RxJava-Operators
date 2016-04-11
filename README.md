@@ -54,14 +54,14 @@ Before:
 
 ```java
 Observable.range(1, 10).zipWith(Observable.interval(1, TimeUnit.SECONDS), (i, t) -> i)
-    .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis());
+    .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
 ```
 
 After:
 
 ```java
 Observable.range(1, 10).lift(new OperatorFrequency(1, TimeUnit.SECONDS))
-    .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis());
+    .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
 
 // 1: 1428053481338
 // 2: 1428053482339
