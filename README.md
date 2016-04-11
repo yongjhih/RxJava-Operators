@@ -5,7 +5,15 @@
 
 ## Usage
 
-### OperatorToReversedList
+* OperatorFlatList
+* OperatorFrequency
+* OperatorGroupByGroup
+* OperatorReverse
+* OperatorShuffle
+* OperatorToReversedList
+* OperatorToShuffledList
+
+### OperatorToReversedList/OperatorReverse
 
 Before:
 
@@ -18,15 +26,33 @@ Observable.range(1, 10).toList().doOnNext(list -> Collections.reverse(list))
 After:
 
 ```java
-Observable.range(1, 10).lift(new OperatorToReversedList())
+Observable.range(1, 10).toList().lift(new OperatorToReversedList())
     .subscribe(System.out::println);
+// [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+```
+
+or
+
+```java
+Observable.range(1, 10).lift(new OperatorToReverse())
+    .subscribe(System.out::println);
+// 10
+// 9
+// 8
+// 7
+// 6
+// 5
+// 4
+// 3
+// 2
+// 1
 ```
 
 ## OperatorFrequency
 
 ```java
 Observable.range(1, 10).lift(new OperatorFrequency(1, TimeUnit.SECONDS))
-    .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()).subscribe());
+    .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis());
 
 // 1: 1428053481338
 // 2: 1428053482339
@@ -38,6 +64,27 @@ Observable.range(1, 10).lift(new OperatorFrequency(1, TimeUnit.SECONDS))
 // 8: 1428053478338
 // 9: 1428053479338
 // 10: 1428053480338
+```
+
+### OperatorFlatList
+
+```java
+Observable.range(1, 10).toList().lift(new OperatorFlatList())
+    .subscribe(System.out::println);
+```
+
+### OperatorToShuffledList/OperatorShuffle
+
+```java
+Observable.range(1, 10).toList().lift(new OperatorToShuffledList())
+    .subscribe(System.out::println);
+```
+
+or
+
+```java
+Observable.range(1, 10).lift(new OperatorShuffle())
+    .subscribe(System.out::println);
 ```
 
 ## Installation
