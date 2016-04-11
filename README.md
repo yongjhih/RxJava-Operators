@@ -96,7 +96,7 @@ repositories {
 }
 
 dependencies {
-    //compile 'com.github.yongjhih:RxJava-Operators:-SNAPSHOT'
+    compile 'com.github.yongjhih:RxJava-Operators:-SNAPSHOT'
 }
 ```
 
