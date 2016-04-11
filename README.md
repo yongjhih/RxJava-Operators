@@ -60,7 +60,7 @@ Observable.range(1, 10).zipWith(Observable.interval(1, TimeUnit.SECONDS), (i, t)
 After:
 
 ```java
-Observable.range(1, 10).lift(new OperatorFrequency(1, TimeUnit.SECONDS))
+Observable.range(1, 10).lift(OperatorFrequency.create(1, TimeUnit.SECONDS))
     .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
 
 // 1: 1428053481338
