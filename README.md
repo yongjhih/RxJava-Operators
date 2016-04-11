@@ -55,14 +55,6 @@ Before:
 ```java
 Observable.range(1, 10).zipWith(Observable.interval(1, TimeUnit.SECONDS), (i, t) -> i)
     .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
-```
-
-After:
-
-```java
-Observable.range(1, 10).lift(OperatorFrequency.create(1, TimeUnit.SECONDS))
-    .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
-
 // 1: 1428053481338
 // 2: 1428053482339
 // 3: 1428053483338
@@ -75,7 +67,23 @@ Observable.range(1, 10).lift(OperatorFrequency.create(1, TimeUnit.SECONDS))
 // 10: 1428053480338
 ```
 
+After:
+
+```java
+Observable.range(1, 10).lift(OperatorFrequency.create(1, TimeUnit.SECONDS))
+    .subscribe(i -> System.out.println(i + ": " + System.currentTimeMillis()));
+```
+
 ### OperatorFlatList
+
+Before:
+
+```java
+Observable.range(1, 10).toList().flatMap(Observable::from)
+    .subscribe(System.out::println);
+```
+
+After:
 
 ```java
 Observable.range(1, 10).toList().lift(new OperatorFlatList())
